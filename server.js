@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
 var PORT = process.env.PORT || 3000;
 
 // If deployed, use deployed database. Otherwise use the local mongoheadlines database
-var db = process.env.MONGO_URI || "mongodb://localhost/monogHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/monogHeadlines";
 
 // Initiates Express App
 var app = express();
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
 app.use(router);
 
 // Connect mongoose to DB
-mongoose.connect(db, function(error) {
+mongoose.connect(MONGODB_URI, function(error) {
     if (error) {
         console.log(error);
     } 
