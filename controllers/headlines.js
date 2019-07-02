@@ -15,5 +15,9 @@ module.exports = {
                 cb(err, docs);
             });
         });
+    },
+
+    delete: function(query, cb) {
+        Headline.remove(query, cb);
     }
 }
