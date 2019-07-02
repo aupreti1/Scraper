@@ -1,10 +1,22 @@
 # Scraper
 
-This is a Node.js application that uses Cheerio and MongoDB to scrape NYT articles.
+This is an application that allows a user to scrape the NYT articles, save them and even leave notes.
 
-Features:
-*Scrape NYT home page*Save and Add Notes to Articles
+TOOLS USED:
+* Node.js
+* Express 
+* Body-Parser 
+* Javascript/ jQuery
+* JSON
+* Bootstrap
+* CSS
+* HTML
+* Cheerio
+* Express-Handlebars
+* Axios
+* Mongoose
 
-Tech Used:
-*Node.js*Axios*Cheerio*Express*Express-Handlebars*Mongoose*body-parser*MongoDB
-        
+HOW IT WORKS:
+* The user will click Scrape Articles
+* User can click save articles to find the articles they have saved
+* They can click add note to add notes to articles
