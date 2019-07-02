@@ -38,4 +38,12 @@ module.exports = function(router) {
             res.json(data);
         });
     });
+
+    router.delete("/api/headlines/:id", function(req, res) {
+        var query = {};
+        query._id = req.params.id;
+        headlinesController.delete(query, function(err, date) {
+            res.json(data);
+        });
+    });
 }
