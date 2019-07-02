@@ -7,12 +7,14 @@ module.exports = {
             _headlineId: data._id
         }, cb);
     },
+
     save: function(data, cb) {
         var newNote = {
             _headlineId: data.id, 
             date: makeDate(),
             noteText: data.noteText
         };
+
         Note.create(newNote, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -23,4 +25,10 @@ module.exports = {
             }
         });
     },
-}
+
+    delete: function(data, cb) {
+        Note.remove({
+            _id: data._id
+        }, cb);
+    }
+};
