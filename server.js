@@ -1,52 +1,55 @@
-// Require Dependencies
+// require dependencies 
 var express = require("express");
 var mongoose = require("mongoose");
 var expressHandlebars = require("express-handlebars");
 var bodyParser = require("body-parser");
 
-// Set up the Port
+// set up port to the host port or 3000
 var PORT = process.env.PORT || 3000;
 
-// If deployed, use deployed database. Otherwise use the local mongoheadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/monogHeadlines";
-
-// Initiates Express App
+//initiate express app
 var app = express();
 
-// Set up the Express Router
+//set up express router
 var router = express.Router();
 
-// Requires the routes file to pass the router object
+//require routes file to pass router object
 require("./config/routes")(router);
 
-// Assigns Public Folder as Static Directory
-app.use(express.static(_dirname + "/public"));
+//designate public folder as static directory
+app.use(express.static(__dirname + "/public"));
 
-// Connecting Handlebars to Express
+//connect handlebars
 app.engine("handlebars", expressHandlebars({
     defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
 
-//Using bodyParser
+
+//use bodyParser
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-// Have Requests go through Router
+//make every request go through router middleware
 app.use(router);
 
-// Connect mongoose to DB
-mongoose.connect(MONGODB_URI, function(error) {
+// if deployed use the deployed database else use local mongoheadlines database
+var db = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+//connect mongoose to database
+mongoose.connect(db, function(error){
+    //log any errors in connecting
     if (error) {
         console.log(error);
-    } 
+    }
+    //or log connection message
     else {
-        console.log("mongoose connection is successful");
+        console.log("mongoose connection successful");
     }
 });
 
-// Listen on Port...
-app.listen(PORT, function() {
+//listen on port
+app.listen(PORT, function(){
     console.log("Listening on port:" + PORT);
 });

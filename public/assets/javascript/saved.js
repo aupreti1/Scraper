@@ -1,25 +1,24 @@
-$(document).ready(function() {
+$(document).ready(function(){
     var articleContainer = $(".article-container");
 
     $(document).on("click", ".btn.delete", handleArticleDelete);
     $(document).on("click", ".btn.notes", handleArticleNotes);
-    $(document).on("click", ",btn.save", handleNoteSave);
+    $(document).on("click", ".btn.save", handleNoteSave);
     $(document).on("click", ".btn.note-delete", handleNoteDelete);
 
     initPage();
 
     function initPage() {
         articleContainer.empty();
-        $.get("/api/headlines?saved=true").then(function(data) {
+        $.get("/api/headlines?saved=true").then(function(data){
             if (data && data.length) {
                 renderArticles(data);
-            }
-            else {
+            } else {
                 renderEmpty();
             }
         });
     }
-    
+
     function renderArticles(articles) {
         var articlePanels = [];
 

@@ -1,39 +1,66 @@
-body {
-    margin-bottom: 80px;
-    background-image: url('books.jpg');
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
-
-ul {
-    text-align: center;
+h3,.panel-default>.panel-heading{
+    color:white;
+    background-color: #00cc99;
 }
-li {
-    display: inline;
-    float: none;
-}
-a {
-    display: inline-block;
-}
-
-.nav-link {
+a{
+    background-color: #00cc99;
     color: white;
 }
-
-.jumbotron {
-    background-color: rgba(53, 52, 52, 0.8);
+.btn{
+    background-color: #ab008f;
+    color: white;
+    margin-left: 10px;
+}
+.btn:hover{
+    background-color: #ab008f;
     color: white;
 }
-
-.article-container {
-    background-color: rgba(53, 52, 52, 0.8);
+.navbar-inverse .navbar-nav>.active>a:hover{
+    background-color: #ab008f;
     color: white;
 }
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(53, 52, 52);
+.navbar-inverse .navbar-nav>li>a:hover{
+    background-color: #ab008f;
     color: white;
-    text-align: center;
+}
+.container-fluid {
+    background-image: url("https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+    padding: 40px;
+   
+}
+.navbar-inverse .navbar-nav>.active>a{
+    background-color: rgb(230,112,177); 
+    color:white;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color:white;
+    
+}
+.container-fluid.article-container{
+    padding:80px;
+}
+div.jumbotron.text-center{
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBXRLqeP0UYJLud5tSs1UbT95lsKj-nBeLnXiyOD2QmtHCciXy")
+}
+footer{
+    padding:50px;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBXRLqeP0UYJLud5tSs1UbT95lsKj-nBeLnXiyOD2QmtHCciXy")
+}
+.footer-container{
+    margin-top:-48px;
+}
+div.alert.alert-warning.text-center{
+    background-color:#5470ba
+}
+a.btn.btn-danger.scrape-new {
+    background-color: #5470ba
+}
+.navbar-inverse .navbar-brand{
+    background-color: rgb(230,112,177);
+    color: white;
+    font-size: 25px;
+    
 }

@@ -1,95 +1,102 @@
-$(document).ready(function() {
-    var articleContainer = $(".article-container");
-    $(document).on("click", "btn.save", handleArticleSave);
-    $(document).on("click", ".scrape-new", handleArticleScrape);
+$(document).ready(function(){
+  //setting a reference to article container div where content will go
+  var articleContainer = $(".article-container");
 
-    initPage();
+  //added event listeners to dynamically generated save articles
+  $(document).on("click", ".btn.save", handleArticleSave);
+  
+  //scrape new articles button
+  $(document).on("click", ".scrape-new", handleArticleScrape);
+  
+  //when page is ready run initPage function
+  initPage();
 
-    function initPage() {
-        articleContainer.empty();
-        $.get("/api/headlines?saved=false")
-            .then(function(data) {
-                if (data && data.length) {
-                    renderArticles(data);
-                }
-                else {
-                    renderEmpty();
-                }
-            });
-    }
+  function initPage() {
+      articleContainer.empty();
+      $.get("/api/headlines?saved=false")
+        .then(function(data){
+            if(data && data.length){
+                renderArticles(data);
+            }
+            else {
+                renderEmpty();
+            }
+        });
+  }
 
-    function renderArticles(articles) {
-        var articlePanels = [];
-        for (var i = 0; i < articles.length; i++) {
-            articlePanels.push(createPanel(articles[i]));
-        }
+  function renderArticles(articles) {
+      var articlePanels = [];
+      console.log(articles);
+      for (var i = 0; i < articles.length; i++) {
+          articlePanels.push(createPanel(articles[i]));
+      }
+      articlePanels.forEach(articlePanel => {
+          $(".article-container").append(articlePanel);
+      });
+  }
 
-        articleContainer.append(articlePanels);
-    }
+  function createPanel(article) {
+      var panel = 
+      $(["<div class='panel panel-default'>",
+         "<div class='panel-heading'>",
+         "<h3>",
+         article.headline,
+         "<a class='btn btn-success save'>",
+         "Save Article",
+         "</a>",
+         "</h3>",
+         "</div>",
+         "<div class='panel-body'>",
+         article.summary,
+         "</div>",
+         "</div>"
+      ].join(""));
 
-    function creatPanel(article) {
-        var panel = 
-            $(["<div class='panel panel-default'>",
-                "<div class='panel-heading'>",
-                "<h3>",
-                article.headline,
-                "<a class='btn btn-success save'>",
-                "Save Article",
-                "</a>",
-                "</h3>",
-                "</div>",
-                "<div class='panel-body'>",
-                article.summary,
-                "</div>",
-                "</div>"]
-                .join(""));
+      panel.data("_id", article._id);
 
-        panel.data("_id", article._id);
+      return panel;
+  }
 
-        return panel;
-    }
+  function renderEmpty() {
+      var emptyAlert =
+      $(["<div class='alert alert-warning text-center'>",
+         "<h4>Uh oh. Looks like we don't have any new articles.</h4>",
+         "</h4>",
+         "<div class='panel panel-default'>",
+         "<div class='panel-heading text-center'>",
+         "<h3>What Would You Like to Do?</h3>",
+         "</div>",
+         "<div class='panel-body text-center'>",
+         "<h4><a class='scrape-new'>Try Scraping New Articles</a></h4>",
+         "<h4><a href='/saved'>Go to Saved Articles</a></h4>",
+         "</div>",
+         "</div>"
+      ].join(""));
+      articleContainer.append(emptyAlert);
+  }
 
-    function renderEmpty() {
-        var emptyAlert = 
-            $(["<div class='alert alert-warning text-center'>",
-                "<h4>Uh oh. We don't have any new articles.<h4>",
-                "</div>",
-                "<div class='panel panel-default'>",
-                "<div class='panel-heading text-center'>",
-                "<h3>What would you like to do?</h3>",
-                "</div>",
-                "<div class='panel-body text-center'>",
-                "<h4><a class='scrape-new'>Try scraping new articles</a></h4>",
-                "<h4><a href='/saved'>Go to saved articles</a></h4>",
-                "</div>",
-                "</div>"]
-                .join(""));
+  function handleArticleSave(){
+      var articleToSave = $(this).parents(".panel").data();
+      articleToSave.saved = true;
 
-        articleContainer.append(emptyAlert);
-    }
-
-    function articleSave() {
-        const articleToSave = $(this)
-          .parents(".panel")
-          .data();
-        articleToSave.saved = true;
-    
-        $.ajax({
+      $.ajax({
           method: "PATCH",
           url: "/api/headlines",
           data: articleToSave
-        }).then(function(data) {
-          if (data.ok) { 
-            initPage();
+      })
+      .then(function(data){
+          if(data.ok){
+              initPage();
           }
+      });
+  }
+
+  function handleArticleScrape() {
+      $.get("/api/fetch")
+        .then(function(data){
+            initPage();
+            bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
         });
-      }
-    
-      function articleScrape() {
-        $.get("/api/fetch")
-        .then(function(data) {
-          initPage();
-          bootbox.alert('<h3 class="text-center m-top-80">'+ data.message + '</h3>')
-        });
-      }
-    });
+  }
+
+});
